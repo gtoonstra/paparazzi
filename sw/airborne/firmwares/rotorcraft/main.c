@@ -114,6 +114,31 @@ static inline void on_accel_event( void );
 static inline void on_gps_event( void );
 static inline void on_mag_event( void );
 
+volatile uint8_t ahrs_timeout_counter = 0;
+// variables for statistics on dt
+static float dt_avg = 0.0;
+static float dt_sum = 0.0;
+static float dt_min = FLT_MAX;
+static float dt_max = FLT_MIN;
+static uint32_t dt_cnt = 0;
+
+//FIXME not the correct place
+static void send_filter_status(void) {
+  uint8_t mde = 3;
+  if (ahrs.status == AHRS_UNINIT) mde = 2;
+  if (ahrs_timeout_counter > 10) mde = 5;
+  uint16_t val = 0;
+  if (dt_cnt > 0)
+    dt_avg = dt_sum / dt_cnt;
+  DOWNLINK_SEND_STATE_FILTER_STATUS(DefaultChannel, DefaultDevice, &mde, &val,
+                                    &dt_avg, &dt_min, &dt_max);
+  // reset dt statistics
+  dt_sum = 0.0;
+  dt_cnt = 0;
+  dt_min = FLT_MAX;
+  dt_max = FLT_MIN;
+}
+
 
 tid_t main_periodic_tid; ///< id for main_periodic() timer
 tid_t modules_tid;       ///< id for modules_periodic_task() timer
@@ -195,6 +220,8 @@ STATIC_INLINE void main_init( void ) {
 #if USE_BARO_BOARD
   baro_tid = sys_time_register_timer(1./BARO_PERIODIC_FREQUENCY, NULL);
 #endif
+
+  register_periodic_telemetry(DefaultPeriodic, "STATE_FILTER_STATUS", send_filter_status);
 }
 
 STATIC_INLINE void handle_periodic_tasks( void ) {
@@ -280,6 +307,9 @@ STATIC_INLINE void failsafe_check( void ) {
 #endif
 
   autopilot_check_in_flight(autopilot_motors_on);
+
+  if (ahrs_timeout_counter < 255)
+    ahrs_timeout_counter ++;
 }
 
 STATIC_INLINE void main_event( void ) {
@@ -343,13 +373,26 @@ PRINT_CONFIG_MSG("Calculating dt for AHRS/INS propagation.")
   // dt between this and last callback
   float dt = now_ts - last_ts;
   last_ts = now_ts;
+
+  // get some statistics on dt
+  dt_sum += dt;
+  dt_cnt++;
+  if (dt < dt_min)
+    dt_min = dt;
+  if (dt > dt_max)
+    dt_max = dt;
 #else
 PRINT_CONFIG_MSG("Using fixed AHRS_PROPAGATE_FREQUENCY for AHRS/INS propagation.")
 PRINT_CONFIG_VAR(AHRS_PROPAGATE_FREQUENCY)
   const float dt = (1./AHRS_PROPAGATE_FREQUENCY);
+  dt_avg = dt;
+  dt_min = dt;
+  dt_max = dt;
 #endif
 
   ImuScaleGyro(imu);
+
+  ahrs_timeout_counter = 0;
 
   if (ahrs.status == AHRS_UNINIT) {
     ahrs_aligner_run();
