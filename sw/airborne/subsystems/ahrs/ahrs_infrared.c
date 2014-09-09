@@ -51,7 +51,9 @@ static void send_status(void) {
   uint16_t contrast = abs(infrared.roll) + abs(infrared.pitch) + abs(infrared.top);
   uint8_t mde = 3;
   if (contrast < 50) mde = 7;
-  DOWNLINK_SEND_STATE_FILTER_STATUS(DefaultChannel, DefaultDevice, &mde, &contrast);
+  const float foo = 0.;
+  DOWNLINK_SEND_STATE_FILTER_STATUS(DefaultChannel, DefaultDevice, &mde, &contrast,
+                                    &foo, &foo, &foo);
 }
 #endif
 
