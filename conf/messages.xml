@@ -1992,9 +1992,9 @@
    <message name="STATE_FILTER_STATUS" id="232">
      <field name="state_filter_mode" type="uint8" values="UNKNOWN|INIT|ALIGN|OK|GPS_LOST|IMU_LOST|COV_ERR|IR_CONTRAST|ERROR"/>
      <field name="value" type="uint16"/>
-     <field name="dt_avg" type="float" unit="sec"/>
-     <field name="dt_min" type="float" unit="sec"/>
-     <field name="dt_max" type="float" unit="sec"/>
+     <field name="dt_avg" type="float" unit="sec" alt_unit="msec"/>
+     <field name="dt_min" type="float" unit="sec" alt_unit="msec"/>
+     <field name="dt_max" type="float" unit="sec" alt_unit="msec"/>
    </message>
 
  <!--233 is free -->

@@ -728,14 +728,17 @@ static inline void on_gps_solution( void ) {
 #if USE_IMU
 static inline void on_accel_event( void ) {
 #if USE_AUTO_AHRS_FREQ || !defined(AHRS_CORRECT_FREQUENCY)
-  // timestamp when last callback was received
-  static float last_ts = 0.f;
+PRINT_CONFIG_MSG("Calculating dt for AHRS accel update.")
+  // timestamp in usec when last callback was received
+  static uint32_t last_ts = 0;
   // current timestamp
-  float now_ts = get_sys_time_float();
-  // dt between this and last callback
-  float dt = now_ts - last_ts;
+  uint32_t now_ts = get_sys_time_usec();
+  // dt between this and last callback in seconds
+  float dt = (float)(now_ts - last_ts) / 1e6;
   last_ts = now_ts;
 #else
+PRINT_CONFIG_MSG("Using fixed AHRS_CORRECT_FREQUENCY for AHRS accel update.")
+PRINT_CONFIG_VAR(AHRS_CORRECT_FREQUENCY)
   const float dt = 1./AHRS_CORRECT_FREQUENCY;
 #endif
 
@@ -748,12 +751,12 @@ static inline void on_accel_event( void ) {
 static inline void on_gyro_event( void ) {
 #if USE_AUTO_AHRS_FREQ || !defined(AHRS_PROPAGATE_FREQUENCY)
 PRINT_CONFIG_MSG("Calculating dt for AHRS/INS propagation.")
-  // timestamp when last callback was received
-  static float last_ts = 0.f;
+  // timestamp in usec when last callback was received
+  static uint32_t last_ts = 0;
   // current timestamp
-  float now_ts = get_sys_time_float();
-  // dt between this and last callback
-  float dt = now_ts - last_ts;
+  uint32_t now_ts = get_sys_time_usec();
+  // dt between this and last callback in seconds
+  float dt = (float)(now_ts - last_ts) / 1e6;
   last_ts = now_ts;
 
   // get some statistics on dt
@@ -766,7 +769,7 @@ PRINT_CONFIG_MSG("Calculating dt for AHRS/INS propagation.")
 #else
 PRINT_CONFIG_MSG("Using fixed AHRS_PROPAGATE_FREQUENCY for AHRS/INS propagation.")
 PRINT_CONFIG_VAR(AHRS_PROPAGATE_FREQUENCY)
-  const float dt = (1./AHRS_PROPAGATE_FREQUENCY);
+  const float dt = 1. / (AHRS_PROPAGATE_FREQUENCY);
   dt_avg = dt;
   dt_min = dt;
   dt_max = dt;
@@ -802,15 +805,18 @@ static inline void on_mag_event(void)
 {
 #if USE_MAGNETOMETER
 #if USE_AUTO_AHRS_FREQ || !defined(AHRS_MAG_CORRECT_FREQUENCY)
-  // timestamp when last callback was received
-  static float last_ts = 0.f;
+PRINT_CONFIG_MSG("Calculating dt for AHRS mag update.")
+  // timestamp in usec when last callback was received
+  static uint32_t last_ts = 0;
   // current timestamp
-  float now_ts = get_sys_time_float();
-  // dt between this and last callback
-  float dt = now_ts - last_ts;
+  uint32_t now_ts = get_sys_time_usec();
+  // dt between this and last callback in seconds
+  float dt = (float)(now_ts - last_ts) / 1e6;
   last_ts = now_ts;
 #else
-  const float dt = 1./AHRS_MAG_CORRECT_FREQUENCY;
+PRINT_CONFIG_MSG("Using fixed AHRS_MAG_CORRECT_FREQUENCY for AHRS mag update.")
+PRINT_CONFIG_VAR(AHRS_MAG_CORRECT_FREQUENCY)
+  const float dt = 1. / (AHRS_MAG_CORRECT_FREQUENCY);
 #endif
 
   ImuScaleMag(imu);
