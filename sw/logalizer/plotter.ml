@@ -157,7 +157,7 @@ class plot = fun ~size ~update_time ~width ~height ~packing () ->
       Hashtbl.remove curves name;
       try (* this try should not be needed *)
         let binding = Hashtbl.find bindings name in
-        Ivy.unbind binding;
+        Pprzbus.unbind binding;
         Hashtbl.remove bindings name
       with _ -> ()
 
@@ -574,7 +574,7 @@ let _ =
     | x::xs -> init := {x with geometry = s} :: xs in
 
   Arg.parse
-    [ "-b", Arg.String (fun x -> ivy_bus := x), (sprintf "<ivy bus> Default is %s" !ivy_bus);
+    [ "-b", Arg.String (fun x -> ivy_bus := x), (sprintf "<pprzbus bus> Default is %s" !ivy_bus);
       "-c", Arg.String (fun x -> add_init x), "<curve>  Add a curve (e.g. '*:telemetry:BAT:voltage'). The curve is inserted into the last open window (cf -n option)";
 
       (* no code yet *)
@@ -591,8 +591,8 @@ let _ =
   init := List.map (fun w -> {w with size= !size; update= !update_time}) !init;
 
   (** Connect to the Ivy bus *)
-  Ivy.init "Paparazzi plotter" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "Paparazzi plotter" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   List.iter plot_window !init;
 

@@ -605,8 +605,8 @@ let () =
     "Usage: ";
   (*                                 *)
   if not !edit then begin
-    Ivy.init "Paparazzi GCS" "READY" (fun _ _ -> ());
-    Ivy.start !ivy_bus
+    Pprzbus.init "Paparazzi GCS" "READY" (fun _ _ -> ());
+    Pprzbus.start !ivy_bus
   end;
 
   Srtm.add_path default_path_srtm;

@@ -489,8 +489,8 @@ let () =
   Arg.parse options (fun _x -> ()) "Usage: ";
 
   (** Connect to Ivy bus *)
-  Ivy.init "Link" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "Link" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   if (!link_id <> 0) && (not !red_link) then
     fprintf stderr "\nLINK WARNING: The link id was set to %i but the -redlink flag wasn't set. To use this link as a redundant link, set the -redlink flag.%!" !link_id;

@@ -19,8 +19,8 @@ let () =
     (fun x -> fprintf stderr "Warning: Discarding '%s'" x)
     "Usage: ";
 
-  Ivy.init "tcp_ivy" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "tcp_ivy" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   let addr = Unix.inet_addr_of_string !host in
   let sockaddr = Unix.ADDR_INET (addr, !port) in
@@ -61,7 +61,7 @@ let () =
       let buf = Pprz.Transport.packet payload in
       fprintf o "%s%!" buf
     with exc -> prerr_endline (Printexc.to_string exc) in
-  let _b = Ivy.bind get_ivy_message "^ground_dl (.*)" in
+  let _b = Pprzbus.bind get_ivy_message "^ground_dl (.*)" in
 
   let hangup = fun _ -> prerr_endline "hangup"; exit 1 in
   ignore (Glib.Io.add_watch [`HUP] hangup ginput);

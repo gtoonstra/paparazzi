@@ -94,44 +94,46 @@ openlog2tlm: openlog2tlm.c
 	@echo CC $@
 	$(Q)$(CC) $(CFLAGS) -o $@ $^
 
-DISP3D_CFLAGS = $(shell pkg-config --cflags ivy-glib gtk+-2.0 gtkgl-2.0)
-DISP3D_LDFLAGS = $(shell pkg-config --libs ivy-glib gtk+-2.0 gtkgl-2.0) $(shell pcre-config --libs)
+DISP3D_CFLAGS = $(shell pkg-config --cflags pprzbus-glib gtk+-2.0 gtkgl-2.0)
+DISP3D_LDFLAGS = $(shell pkg-config --libs pprzbus-glib gtk+-2.0 gtkgl-2.0) $(shell pcre-config --libs)
 
 disp3d: disp3d.c
 	@echo CC $@
 	$(Q)$(CC)  $(CFLAGS) $(DISP3D_CFLAGS) -o $@ $^ $(DISP3D_LDFLAGS)
 
 
-IVY_C_LIBS = $(shell pkg-config --libs ivy-glib) $(shell pcre-config --libs)
-GLIBIVY_CFLAGS = $(shell pkg-config --cflags ivy-glib)
+PPRZBUS_C_LIBS = $(shell pkg-config --libs pprzbus-glib) $(shell pcre-config --libs)
+GLIBPPRZBUS_CFLAGS = $(shell pkg-config --cflags pprzbus-glib)
+
+REDIS_LDFLAGS = $(shell pkg-config --libs hiredis 2> /dev/null)
 
 #
 # try to find include locations on OSX
 #
 UNAME = $(shell uname -s)
 ifeq ("$(UNAME)","Darwin")
-  IVY_C_LIB_INC = $(shell if test -d /opt/paparazzi/lib; then echo "-L/opt/paparazzi/lib"; elif test -d /opt/local/lib; then echo "-L/opt/local/lib"; fi)
-  IVY_C_INCLUDES = $(shell if test -d /opt/paparazzi/include; then echo "-I/opt/paparazzi/include"; elif test -d /opt/local/include; then echo "-I/opt/local/include"; fi)
-  GLIBIVY_CFLAGS += $(IVY_C_LIB_INC) $(IVY_C_INCLUDES)
+  PPRZBUS_C_LIB_INC = $(shell if test -d /opt/paparazzi/lib; then echo "-L/opt/paparazzi/lib"; elif test -d /opt/local/lib; then echo "-L/opt/local/lib"; fi)
+  PPRZBUS_C_INCLUDES = $(shell if test -d /opt/paparazzi/include; then echo "-I/opt/paparazzi/include"; elif test -d /opt/local/include; then echo "-I/opt/local/include"; fi)
+  GLIBPPRZBUS_CFLAGS += $(PPRZBUS_C_LIB_INC) $(PPRZBUS_C_INCLUDES)
 endif
 
 
 plotprofile: plotprofile.c
 	@echo CC $@
-	$(Q)$(CC) $(CFLAGS) $(GLIBIVY_CFLAGS) -o $@ $^ $(IVY_C_LIBS)
+	$(Q)$(CC) $(CFLAGS) $(GLIBPPRZBUS_CFLAGS) -o $@ $^ $(PPRZBUS_C_LIBS) $(REDIS_LDFLAGS)
 
 ahrs2fg: ahrs2fg.c network.c flight_gear.c utils.c
-	$(CC) $(CFLAGS) $(GLIBIVY_CFLAGS) -o $@ $^ $(IVY_C_LIBS) -lm
+	$(CC) $(CFLAGS) $(GLIBPPRZBUS_CFLAGS) -o $@ $^ $(PPRZBUS_C_LIBS) -lm $(REDIS_LDFLAGS)
 
 
 tmclient: tmclient.c
-	$(CC) -g -O1 -Wall $(GLIBIVY_CFLAGS) -o $@ $^ $(IVY_C_LIBS)
+	$(CC) -g -O1 -Wall $(GLIBPPRZBUS_CFLAGS) -o $@ $^ $(PPRZBUS_C_LIBS) $(REDIS_LDFLAGS)
 
 ffjoystick: ffjoystick.c
-	$(CC) -g -O2 -Wall $(GLIBIVY_CFLAGS) -o $@ $^ $(IVY_C_LIBS) -lm
+	$(CC) -g -O2 -Wall $(GLIBPPRZBUS_CFLAGS) -o $@ $^ $(PPRZBUS_C_LIBS) -lm $(REDIS_LDFLAGS)
 
 ctrlstick: ctrlstick.c
-	$(CC) -g -O2 -Wall $(GLIBIVY_CFLAGS) -o $@ $^ $(IVY_C_LIBS)
+	$(CC) -g -O2 -Wall $(GLIBPPRZBUS_CFLAGS) -o $@ $^ $(PPRZBUS_C_LIBS) $(REDIS_LDFLAGS)
 
 
 clean:

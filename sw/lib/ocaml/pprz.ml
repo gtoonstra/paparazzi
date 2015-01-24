@@ -613,14 +613,14 @@ module type MESSAGES = sig
   val message_send : ?timestamp:float -> ?link_id:int -> string -> string -> values -> unit
   (** [message_send sender link_id msg_name values] *)
 
-  val message_bind : ?sender:string -> string -> (string -> values -> unit) -> Ivy.binding
+  val message_bind : ?sender:string -> string -> (string -> values -> unit) -> Pprzbus.binding
   (** [message_bind ?sender msg_name callback] *)
 
-  val message_answerer : string -> string -> (string -> values -> values) -> Ivy.binding
+  val message_answerer : string -> string -> (string -> values -> values) -> Pprzbus.binding
   (** [message_answerer sender msg_name callback] *)
 
   val message_req : string -> string -> values -> (string -> values -> unit) -> unit
-(** [message_answerer sender msg_name values receiver] Sends a request on the Ivy bus for the specified message. On reception, [receiver] will be applied on [sender_name] and expected values. *)
+(** [message_answerer sender msg_name values receiver] Sends a request on the Pprzbus bus for the specified message. On reception, [receiver] will be applied on [sender_name] and expected values. *)
 end
 
 
@@ -746,10 +746,10 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
     let msg = sprintf "%s%s %s" timestamp_string sender s in
     let n = String.length msg in
     if n > 1000 then (** FIXME: to prevent Ivy bug on long message *)
-      fprintf stderr "Discarding long ivy message (%d bytes)\n%!" n
+      fprintf stderr "Discarding long Pprzbus message (%d bytes)\n%!" n
     else
       match link_id with
-        None -> Ivy.send msg
+        None -> Pprzbus.send msg
       | Some the_link_id -> begin
         let index = ref 0 in
         let modified_msg = String.copy msg in
@@ -761,19 +761,19 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
             end
           | x -> index := !index + 1; in
         String.iter func modified_msg;
-        Ivy.send ( Printf.sprintf "redlink TELEMETRY_MESSAGE %s %i %s" sender the_link_id modified_msg);
+        Pprzbus.send ( Printf.sprintf "redlink TELEMETRY_MESSAGE %s %i %s" sender the_link_id modified_msg);
       end
           
   let message_bind = fun ?sender msg_name cb ->
     match sender with
         None ->
-          Ivy.bind
+          Pprzbus.bind
             (fun _ args ->
               let values = try snd (values_of_string args.(2)) with exc -> prerr_endline (Printexc.to_string exc); [] in
               cb args.(1) values)
             (sprintf "^([0-9]+\\.[0-9]+ )?([^ ]*) +(%s( .*|$))" msg_name)
       | Some s ->
-        Ivy.bind
+        Pprzbus.bind
           (fun _ args ->
             let values = try snd (values_of_string args.(1)) with  exc -> prerr_endline (Printexc.to_string exc); [] in
             cb s values)
@@ -786,24 +786,24 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
       try (** Against [cb] exceptions *)
         let values = cb asker (snd (values_of_string args.(2))) in
         let m = string_of_message (snd (message_of_name msg_name)) values in
-        Ivy.send (sprintf "%s %s %s" asker_id sender m)
+        Pprzbus.send (sprintf "%s %s %s" asker_id sender m)
       with
           exc -> fprintf stderr "Pprz.answerer %s:%s: %s\n%!" sender msg_name (Printexc.to_string exc)
     in
-    Ivy.bind ivy_cb (sprintf "^([^ ]*) +([^ ]*) +(%s_REQ.*)" msg_name)
+    Pprzbus.bind ivy_cb (sprintf "^([^ ]*) +([^ ]*) +(%s_REQ.*)" msg_name)
 
   let gen_id = let r = ref 0 in fun () -> incr r; !r
   let message_req = fun sender msg_name values (f:string -> (string * value) list -> unit) ->
     let b = ref (Obj.magic ()) in
     let cb = fun _ args ->
-      Ivy.unbind !b;
+      Pprzbus.unbind !b;
       f args.(0) (snd (values_of_string args.(1))) in
     let id = sprintf "%d_%d" (Unix.getpid ()) (gen_id ()) in
     let r = sprintf "^%s ([^ ]*) +(%s.*)" id msg_name in
-    b := Ivy.bind cb r;
+    b := Pprzbus.bind cb r;
     let msg_name_req = msg_name ^ "_REQ" in
     let m = sprintf "%s %s %s" sender id (string_of_message (snd (message_of_name msg_name_req)) values) in
-    Ivy.send m
+    Pprzbus.send m
 end
 
 module Messages(Class:CLASS) = struct

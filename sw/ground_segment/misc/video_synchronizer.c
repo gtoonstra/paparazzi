@@ -27,8 +27,8 @@
 #include <string.h>
 #include <inttypes.h>
 
-#include <Ivy/ivy.h>
-#include <Ivy/ivyglibloop.h>
+#include <Pprzbus/pprzbus.h>
+#include <Pprzbus/pprzbusglibloop.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>

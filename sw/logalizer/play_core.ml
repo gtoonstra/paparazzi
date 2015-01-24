@@ -154,8 +154,8 @@ let run = fun serial_port log adj i0 speed no_gui ->
     (* continue if message is in telemetry class *)
     begin try
       let _ = Tm_Pprz.message_of_name name in
-      Ivy.send (Printf.sprintf "replay%s %s" ac m);
-      Ivy.send (Printf.sprintf "time%s %f" ac t);
+      Pprzbus.send (Printf.sprintf "replay%s %s" ac m);
+      Pprzbus.send (Printf.sprintf "time%s %f" ac t);
       begin
         match serial_port with
           None -> ()
@@ -188,7 +188,7 @@ let play = fun ?(no_gui=false) serial_port adj speed ->
 
 let init = fun () ->
   Arg.parse
-    [ "-b", Arg.String (fun x -> bus := x), (sprintf "<ivy bus> Default is %s" !bus);
+    [ "-b", Arg.String (fun x -> bus := x), (sprintf "<pprzbus bus> Default is %s" !bus);
       "-d", Arg.Set_string port, (sprintf "<port> Default is %s" !port);
       "-o", Arg.Set output_on_serial, "Output binary messages on serial port";
       "-s", Arg.Set_string baudrate, (sprintf "<baudrate>  Default is %s" !baudrate);
@@ -226,7 +226,7 @@ let init = fun () ->
 
 
 let main = fun () ->
-  Ivy.init "Paparazzi replay" "READY" (fun _ _ -> ());
-  Ivy.start !bus;
+  Pprzbus.init "Paparazzi replay" "READY" (fun _ _ -> ());
+  Pprzbus.start !bus;
 
   GMain.Main.main ()

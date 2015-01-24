@@ -101,8 +101,8 @@ let _ =
     "Usage: ";
 
   (* Connect to Ivy bus *)
-  Ivy.init "Link" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "Link" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   (* Listen for telemetry messages *)
   ignore (Ground_Pprz.message_bind "FLIGHT_PARAM" fp_msg);

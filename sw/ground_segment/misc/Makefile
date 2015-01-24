@@ -37,20 +37,22 @@ endif
 
 CFLAGS += -Wall -fPIC
 GTK_CFLAGS  = $(shell pkg-config gtk+-2.0 --cflags)
-GTK_LDFLAGS = $(shell pkg-config gtk+-2.0 --libs) $(shell pkg-config --libs ivy-glib) $(shell pcre-config --libs) -fPIC
+GTK_LDFLAGS = $(shell pkg-config gtk+-2.0 --libs) $(shell pkg-config --libs pprzbus-glib) $(shell pcre-config --libs) -fPIC
 
-# fallback to ivy-glib pkg-config info if there is no ivy-c.pc
-IVY_INC = $(shell pkg-config --cflags-only-I ivy-c 2> /dev/null)
-IVY_LDFLAGS = $(shell pkg-config --libs ivy-c 2> /dev/null)
-ifeq ($(strip $(IVY_INC)),)
-IVY_INC = $(shell pkg-config --cflags-only-I ivy-glib)
-IVY_LDFLAGS = $(shell pkg-config --libs-only-L ivy-glib) -livy
+# fallback to pprzbus-glib pkg-config info if there is no pprzbus-c.pc
+PPRZBUS_INC = $(shell pkg-config --cflags-only-I pprzbus 2> /dev/null)
+PPRZBUS_LDFLAGS = $(shell pkg-config --libs pprzbus 2> /dev/null)
+ifeq ($(strip $(PPRZBUS_INC)),)
+PPRZBUS_INC = $(shell pkg-config --cflags-only-I pprzbus-glib)
+PPRZBUS_LDFLAGS = $(shell pkg-config --libs-only-L pprzbus-glib) -lpprzbus
 endif
+
+REDIS_LDFLAGS = $(shell pkg-config --libs hiredis 2> /dev/null)
 
 # Optitrack specific librarys and includes
 NATNET_LIBRARYS = $(shell pkg-config glib-2.0 --libs) -lglibpprzbus -lm $(shell pcre-config --libs)
 
-INCLUDES += $(shell pkg-config glib-2.0 --cflags) -I$(PAPARAZZI_SRC)/sw/airborne/ -I$(PAPARAZZI_SRC)/sw/include/ $(IVY_INC)
+INCLUDES += $(shell pkg-config glib-2.0 --cflags) -I$(PAPARAZZI_SRC)/sw/airborne/ -I$(PAPARAZZI_SRC)/sw/include/ $(PPRZBUS_INC)
 
 all: davis2ivy kestrel2ivy natnet2ivy video_synchronizer
 
@@ -59,19 +61,19 @@ clean:
 
 davis2ivy: davis2ivy.o
 	@echo CC $@
-	$(Q)$(CC) $(CFLAGS) -o davis2ivy davis2ivy.o $(LIBRARYS) $(IVY_LDFLAGS)
+	$(Q)$(CC) $(CFLAGS) -o davis2ivy davis2ivy.o $(LIBRARYS) $(PPRZBUS_LDFLAGS) $(REDIS_LDFLAGS)
 
 kestrel2ivy: kestrel2ivy.o
 	@echo CC $@
-	$(Q)$(CC) $(CFLAGS) -o kestrel2ivy kestrel2ivy.o $(LIBRARYS) $(IVY_LDFLAGS)
+	$(Q)$(CC) $(CFLAGS) -o kestrel2ivy kestrel2ivy.o $(LIBRARYS) $(PPRZBUS_LDFLAGS) $(REDIS_LDFLAGS)
 
 natnet2ivy: natnet2ivy.o pprz_geodetic_double.o pprz_algebra_double.o fms_network.o
 	@echo CC $@
-	$(Q)$(CC) $(CFLAGS) -o natnet2ivy natnet2ivy.o pprz_geodetic_double.o pprz_algebra_double.o fms_network.o $(LIBRARYS) $(NATNET_LIBRARYS) $(IVY_LDFLAGS)
+	$(Q)$(CC) $(CFLAGS) -o natnet2ivy natnet2ivy.o pprz_geodetic_double.o pprz_algebra_double.o fms_network.o $(LIBRARYS) $(NATNET_LIBRARYS) $(PPRZBUS_LDFLAGS) $(REDIS_LDFLAGS)
 
 video_synchronizer: video_synchronizer.c
 	@echo CC $@
-	$(Q)$(CC) $(CFLAGS) $(GTK_CFLAGS) $(LIBRARYS) $(INCLUDES) -o $@ $< $(GTK_LDFLAGS)
+	$(Q)$(CC) $(CFLAGS) $(GTK_CFLAGS) $(LIBRARYS) $(INCLUDES) -o $@ $< $(GTK_LDFLAGS) $(REDIS_LDFLAGS)
 
 pprz_algebra_double.o : $(PAPARAZZI_SRC)/sw/airborne/math/pprz_algebra_double.c
 	$(Q)$(CC) $(CFLAGS) -c -O2 -Wall $(INCLUDES) $<

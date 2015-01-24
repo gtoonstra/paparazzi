@@ -612,8 +612,8 @@ let () =
     failwith (sprintf "Error: cannot open device with SDL index %i\n" !device_index);
 
   (** Connect to the Ivy bus *)
-  Ivy.init "Paparazzi joystick" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "Paparazzi joystick" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   (** setup stdin *) (* TODO find a better way to change trim, use a GUI ? *)
   (*let tstatus = (Unix.tcgetattr Unix.stdin) in

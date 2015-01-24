@@ -96,8 +96,8 @@ let _ =
   end;
 
   (** Connect to the Ivy bus *)
-  Ivy.init "Paparazzi settings" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "Paparazzi settings" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   (** Open the window container with its notebook*)
   let icon = GdkPixbuf.from_file Env.icon_file in

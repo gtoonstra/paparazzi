@@ -21,8 +21,8 @@ let () =
     (fun x -> fprintf stderr "Warning: Discarding '%s'" x)
     "Usage: ";
 
-  Ivy.init "ivy_tcp" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "ivy_tcp" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   let addr = Unix.inet_addr_of_string !host in
   let sockaddr = Unix.ADDR_INET (addr, !port) in
@@ -36,7 +36,7 @@ let () =
       let buf = Pprz.Transport.packet payload in
       fprintf o "%s%!" buf
     with _ -> () in
-  let _b = Ivy.bind get_ivy_message (sprintf "^%s (.*)" !id) in
+  let _b = Pprzbus.bind get_ivy_message (sprintf "^%s (.*)" !id) in
 
   (* Forward a datalink command on the bus *)
   let buffer_size = 256 in

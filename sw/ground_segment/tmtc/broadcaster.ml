@@ -19,8 +19,8 @@ let () =
     "Usage: ";
 
   let handler = fun i o ->
-    Ivy.init "broadcaster" "READY" (fun _ _ -> ());
-    Ivy.start !ivy_bus;
+    Pprzbus.init "broadcaster" "READY" (fun _ _ -> ());
+    Pprzbus.start !ivy_bus;
 
     (* Forward telemetry on Ivy *)
     let buffer_size = 256 in
@@ -31,7 +31,7 @@ let () =
           let n = input i buffer 0 buffer_size in
           let data = String.sub buffer 0 n in
 
-          Ivy.send (sprintf "%s %s" !ivy_to (Base64.encode_string data))
+          Pprzbus.send (sprintf "%s %s" !ivy_to (Base64.encode_string data))
         with
             exc -> prerr_endline (Printexc.to_string exc)
       end;
@@ -46,7 +46,7 @@ let () =
     let get_ivy = fun _ args ->
       try fprintf o "%s%!" (Base64.decode_string args.(0)) with
           exc -> prerr_endline (Printexc.to_string exc) in
-    ignore (Ivy.bind get_ivy (sprintf "^%s (.*)" !ivy_from));
+    ignore (Pprzbus.bind get_ivy (sprintf "^%s (.*)" !ivy_from));
 
     (* Main Loop *)
     GMain.main ()

@@ -15,8 +15,8 @@ http://users.softlab.ntua.gr/~ttsiod/gnuplotStreaming.html
 #include <inttypes.h>
 #include <sys/time.h>
 #include <glib.h>
-#include <Ivy/ivy.h>
-#include <Ivy/ivyglibloop.h>
+#include <Pprzbus/pprzbus.h>
+#include <Pprzbus/pprzbusglibloop.h>
 
 #define HEIGHT_SPAN 20000
 

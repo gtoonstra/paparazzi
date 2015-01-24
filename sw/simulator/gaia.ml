@@ -101,8 +101,8 @@ let _ =
 
   vbox#pack gps_sa#coerce;
 
-  Ivy.init "Paparazzi gaia" "READY" (fun _ _ -> ());
-  Ivy.start !ivy_bus;
+  Pprzbus.init "Paparazzi gaia" "READY" (fun _ _ -> ());
+  Pprzbus.start !ivy_bus;
 
   ignore (Ground_Pprz.message_answerer my_id "WORLD_ENV" (fun _ -> world_values));
 

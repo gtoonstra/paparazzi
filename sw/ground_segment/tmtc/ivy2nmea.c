@@ -134,10 +134,10 @@ The $GPGGA Sentence (Fix data)
 
 #include <signal.h>
 
-#include <Ivy/ivy.h>
-#include <Ivy/ivyloop.h>
-#include <Ivy/timer.h>
-#include <Ivy/version.h>
+#include <Pprzbus/pprzbus.h>
+#include <Pprzbus/pprzbusloop.h>
+#include <Pprzbus/timer.h>
+#include <Pprzbus/version.h>
 
 
 

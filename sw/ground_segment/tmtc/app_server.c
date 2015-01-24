@@ -33,8 +33,8 @@
 
 #include <glib.h>
 #include <gio/gio.h>
-#include <Ivy/ivy.h>
-#include <Ivy/ivyglibloop.h>
+#include <Pprzbus/pprzbus.h>
+#include <Pprzbus/pprzbusglibloop.h>
 #include <string.h>
 #include <stddef.h>
 #include <stdlib.h>

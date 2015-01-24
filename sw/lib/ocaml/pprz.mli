@@ -179,10 +179,10 @@ module type MESSAGES = sig
   val message_send : ?timestamp:float -> ?link_id:int -> string -> string -> values -> unit
   (** [message_send sender msg_name values] *)
 
-  val message_bind : ?sender:string ->string -> (string -> values -> unit) -> Ivy.binding
+  val message_bind : ?sender:string ->string -> (string -> values -> unit) -> Pprzbus.binding
   (** [message_bind ?sender msg_name callback] *)
 
-  val message_answerer : string -> string -> (string -> values -> values) -> Ivy.binding
+  val message_answerer : string -> string -> (string -> values -> values) -> Pprzbus.binding
   (** [message_answerer sender msg_name callback] Set a handler for a
       [message_req] (which will send a [msg_name]_REQ message).
       [callback asker args] must return the list of attributes of the answer. *)

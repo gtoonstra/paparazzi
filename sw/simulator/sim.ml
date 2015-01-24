@@ -325,8 +325,8 @@ module Make(AircraftItl : AIRCRAFT_ITL) = struct
     l " North:"; hbox#pack north_label#coerce;
     l " Height:"; hbox#pack alt_label#coerce;
 
-    Ivy.init (sprintf "Paparazzi sim %d" A.ac.Data.id) "READY" (fun _ _ -> ());
-    Ivy.start !ivy_bus;
+    Pprzbus.init (sprintf "Paparazzi sim %d" A.ac.Data.id) "READY" (fun _ _ -> ());
+    Pprzbus.start !ivy_bus;
 
     window#show ();
     Unix.handle_unix_error GMain.Main.main ()
