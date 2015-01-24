@@ -32,7 +32,7 @@ include $(PAPARAZZI_SRC)/sw/Makefile.ocaml
 CC = gcc
 SIMDIR = $(PAPARAZZI_SRC)/sw/simulator
 CAMLINCLUDES = -I $(LIBPPRZDIR) -I $(SIMDIR) -I $(OBJDIR)
-PKG = -package glibivy,pprz
+PKG = -package glibpprzbus,pprz
 LINKPKG = $(PKG) -linkpkg -dllpath-pkg pprz
 SIMSITLML = $(OBJDIR)/simsitl.ml
 MYGTKINITCMO = myGtkInit.cmo
@@ -72,8 +72,8 @@ SIMSITLCUSTOM=TRUE
 endif
 
 ifdef SIMSITLCUSTOM
-	CAMLINCLUDES += $(shell ocamlfind query -r -i-format lablgtk2) $(shell ocamlfind query -r -i-format xml-light) $(shell ocamlfind query -r -i-format glibivy)
-	CAMLCMAS = unix.cma str.cma xml-light.cma glibivy-ocaml.cma lib-pprz.cma lablgtk.cma
+	CAMLINCLUDES += $(shell ocamlfind query -r -i-format lablgtk2) $(shell ocamlfind query -r -i-format xml-light) $(shell ocamlfind query -r -i-format glibpprzbus)
+	CAMLCMAS = unix.cma str.cma xml-light.cma glibpprzbus-ocaml.cma lib-pprz.cma lablgtk.cma
 endif
 
 

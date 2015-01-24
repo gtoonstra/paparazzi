@@ -28,7 +28,7 @@ include ../../Makefile.ocaml
 
 CC = gcc
 
-PKG = -package pprz,glibivy
+PKG = -package pprz,glibpprzbus
 LINKPKG = $(PKG) -linkpkg -dllpath-pkg pprz
 
 GLIB_CFLAGS  = -Wall -fPIC $(shell pkg-config glib-2.0 --cflags)

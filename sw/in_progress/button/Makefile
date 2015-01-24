@@ -38,7 +38,7 @@ plot : ../../lib/ocaml/lib-pprz.cmxa
 # Target for bytecode executable (if ocamlopt is not available)
 # plot : log_file.cmo gtk_export.cmo export.cmo plot.cmo
 #	@echo OL $@
-#	$(Q)$(OCAMLC) $(INCLUDES) -o $@ unix.cma str.cma xml-light.cma glibivy-ocaml.cma lablgtk.cma lib-pprz.cma lablglade.cma gtkInit.cmo  $^
+#	$(Q)$(OCAMLC) $(INCLUDES) -o $@ unix.cma str.cma xml-light.cma glibpprzbus-ocaml.cma lablgtk.cma lib-pprz.cma lablglade.cma gtkInit.cmo  $^
 
 %.cmo: %.ml
 	@echo OC $<
@@ -71,9 +71,9 @@ pt : ahrsview imuview ahrs2fg
 
 CC = gcc
 CFLAGS=-g -O2 -Wall $(shell pkg-config gtk+-2.0 --cflags)
-LDFLAGS=$(shell pkg-config gtk+-2.0 --libs) -s -lgtkdatabox -lglibivy
+LDFLAGS=$(shell pkg-config gtk+-2.0 --libs) -s -lgtkdatabox -lglibpprzbus
 
-MORE_FLAGS = -I/usr/include/gtk-1.2 -I/usr/include/glib-1.2 -I/usr/lib/glib/include -rdynamic  /usr/lib/libgtkgl.so -L/usr/lib -L/usr/X11R6/lib /usr/lib/libgtk.so /usr/lib/libgdk.so /usr/lib/libgmodule.so /usr/lib/libglib.so -ldl -lXi -lXext -lX11 -lm -lGLU -lGL  -Wl,--rpath -Wl,/usr/local/lib -lglibivy $(shell pcre-config --libs)
+MORE_FLAGS = -I/usr/include/gtk-1.2 -I/usr/include/glib-1.2 -I/usr/lib/glib/include -rdynamic  /usr/lib/libgtkgl.so -L/usr/lib -L/usr/X11R6/lib /usr/lib/libgtk.so /usr/lib/libgdk.so /usr/lib/libgmodule.so /usr/lib/libglib.so -ldl -lXi -lXext -lX11 -lm -lGLU -lGL  -Wl,--rpath -Wl,/usr/local/lib -lglibpprzbus $(shell pcre-config --libs)
 
 MORE_CFLAGS = -DHAVE_DLFCN_H=1 -DSTDC_HEADERS=1  -I. -I.  -I..    -g -O2 -I/usr/include/gtk-1.2 -I/usr/include/glib-1.2 -I/usr/lib/glib/include
 
@@ -107,7 +107,7 @@ FGFS_ARGS = $(FGFS_COMMON_ARGS) $(FGFS_IN_GUI_ARGS)
 #FGFS_GAME_ARGS)
 
 panic: panic.c
-	gcc -g -O2 -Wall $(shell pkg-config glib-2.0 --cflags) -o $@ $^ $(shell pkg-config glib-2.0 --libs) -lglibivy -lhid
+	gcc -g -O2 -Wall $(shell pkg-config glib-2.0 --cflags) -o $@ $^ $(shell pkg-config glib-2.0 --libs) -lglibpprzbus -lhid
 
 #
 # Dependencies

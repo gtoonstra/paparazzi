@@ -28,7 +28,7 @@ include ../Makefile.ocaml
 
 OCAMLC += -g
 INCLUDES =
-PKG = -package glibivy,pprz
+PKG = -package glibpprzbus,pprz
 LINKPKG = $(PKG) -linkpkg -dllpath-pkg pprz
 
 SIMML = stdlib.ml data.ml flightModel.ml gps.ml

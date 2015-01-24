@@ -1,5 +1,5 @@
 description = "Paparazzi UAS package"
-requires = "unix,str,xml-light,lablgtk2,glibivy,netclient"
+requires = "unix,str,xml-light,lablgtk2,glibpprzbus,netclient"
 version = "1.0"
 directory = ""
 

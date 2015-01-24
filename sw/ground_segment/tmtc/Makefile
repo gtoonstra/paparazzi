@@ -29,7 +29,7 @@ CONF = ../../../conf
 VAR = ../../../var
 
 INCLUDES= -I ../multimon
-PKG = -package glibivy,pprz
+PKG = -package glibpprzbus,pprz
 LINKPKG = $(PKG) -linkpkg -dllpath-pkg pprz
 XPKG = -package pprz.xlib
 XLINKPKG = $(XPKG) -linkpkg -dllpath-pkg pprz.xlib
@@ -62,7 +62,7 @@ server : $(SERVERCMO) $(LIBPPRZCMA)
 
 server.opt :  $(SERVERCMX) $(LIBPPRZCMXA)
 	@echo OOL $@
-	$(Q)$(OCAMLOPT) $(INCLUDES) -o $@ -package glibivy,pprz -linkpkg $(SERVERCMX)
+	$(Q)$(OCAMLOPT) $(INCLUDES) -o $@ -package glibpprzbus,pprz -linkpkg $(SERVERCMX)
 
 link : link.cmo $(LIBMULTIMONCMA) $(LIBPPRZCMA)
 	@echo OL $@
