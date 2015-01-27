@@ -461,7 +461,7 @@ gboolean new_connection(GSocketService *service, GSocketConnection *connection, 
 void request_ac_config(int ac_id_req) {
 
   RequestID++;
-  IvySendMsg("app_server %d_%d CONFIG_REQ %d" ,ProcessID, RequestID ,ac_id_req );
+  IvySendMsg("app_server %d_%d REQ_CONFIG %d" ,ProcessID, RequestID ,ac_id_req );
   //AC config requested..
 
   if (verbose) {
@@ -811,7 +811,7 @@ void print_help() {
 
 gboolean request_ac_list(gpointer data) {
   RequestID++;
-  IvySendMsg("app_server %d_%d AIRCRAFTS_REQ" ,ProcessID, RequestID);
+  IvySendMsg("app_server %d_%d REQ_AIRCRAFTS" ,ProcessID, RequestID);
   return FALSE;
 }
 

@@ -790,7 +790,7 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
       with
           exc -> fprintf stderr "Pprz.answerer %s:%s: %s\n%!" sender msg_name (Printexc.to_string exc)
     in
-    Pprzbus.bind ivy_cb (sprintf "^([^ ]*) +([^ ]*) +(%s_REQ.*)" msg_name)
+    Pprzbus.bind ivy_cb (sprintf "^([^ ]*) +([^ ]*) +(REQ_%s.*)" msg_name)
 
   let gen_id = let r = ref 0 in fun () -> incr r; !r
   let message_req = fun sender msg_name values (f:string -> (string * value) list -> unit) ->
@@ -801,7 +801,7 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
     let id = sprintf "%d_%d" (Unix.getpid ()) (gen_id ()) in
     let r = sprintf "^%s ([^ ]*) +(%s.*)" id msg_name in
     b := Pprzbus.bind cb r;
-    let msg_name_req = msg_name ^ "_REQ" in
+    let msg_name_req = "REQ_" ^ msg_name in
     let m = sprintf "%s %s %s" sender id (string_of_message (snd (message_of_name msg_name_req)) values) in
     Pprzbus.send m
 end

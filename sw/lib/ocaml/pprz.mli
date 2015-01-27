@@ -184,12 +184,12 @@ module type MESSAGES = sig
 
   val message_answerer : string -> string -> (string -> values -> values) -> Pprzbus.binding
   (** [message_answerer sender msg_name callback] Set a handler for a
-      [message_req] (which will send a [msg_name]_REQ message).
+      [req_message] (which will send a REQ_[msg_name] message).
       [callback asker args] must return the list of attributes of the answer. *)
 
   val message_req : string -> string -> values -> (string -> values -> unit) -> unit
   (** [message_req sender msg_name values receiver] Sends a request on the Ivy
-      bus for the specified message. A [msg_name]_REQ message is send and a
+      bus for the specified message. A REQ_[msg_name] message is send and a
       [msg_name] message is expected for the reply. On reception, [receiver]
       will be applied on [sender_name] and attribute values of the values. *)
 end

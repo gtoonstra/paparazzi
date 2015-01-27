@@ -2550,14 +2550,14 @@
     <field name="ac_list" type="string" format="csv"/>
   </message>
 
-  <message name="AIRCRAFTS_REQ" id="4">
+  <message name="REQ_AIRCRAFTS" id="4">
   </message>
 
   <message name="SELECTED" id="5">
     <field name="aircraft_id" type="string"/>
   </message>
 
-  <message name="SELECTED_REQ" id="6">
+  <message name="REQ_SELECTED" id="6">
   </message>
 
   <message name="WIND_CLEAR" id="7">
@@ -2572,7 +2572,7 @@
     <field name="stddev" type="float" unit="m/s"/>
   </message>
 
-  <message name="CONFIG_REQ" id="9">
+  <message name="REQ_CONFIG" id="9">
     <field name="ac_id" type="string"/>
   </message>
 
@@ -2683,7 +2683,7 @@
     <field name="gps_availability" type="uint8" values="OFF|ON"/>
   </message>
 
-  <message name="WORLD_ENV_REQ" id="21">
+  <message name="REQ_WORLD_ENV" id="21">
     <field name="lat"  type="float" unit="deg"></field>
     <field name="long" type="float" unit="deg"></field>
     <field name="alt"  type="float" unit="m"></field>

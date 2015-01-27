@@ -629,6 +629,7 @@ let ident_msg = fun log name vs ->
       let get_md5sum = fun () -> Pprz.assoc "md5sum" vs in
       let ac, messages_xml = new_aircraft get_md5sum name in
       let ac_msg_closure = ac_msg messages_xml log name ac in
+      (** GT: This listens to one specific aircraft through the regex. Need to change call to listen for specific sender in ivy? *)
       let _b = Pprzbus.bind (fun _ args -> ac_msg_closure args.(1) args.(2)) (sprintf "^(([0-9]+\\.[0-9]+) )?%s +(.*)" name) in
       register_aircraft name ac;
       Ground_Pprz.message_send my_id "NEW_AIRCRAFT" ["ac_id", Pprz.String name]
