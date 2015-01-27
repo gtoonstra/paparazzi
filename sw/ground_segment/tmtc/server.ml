@@ -652,8 +652,6 @@ let send_config = fun http _asker args ->
   try
     let _is_replayed, ac_id, root_dir, conf_xml = replayed ac_id' in
 
-    fprintf stderr "config request %s\n" ac_id';
-
     let conf = ExtXml.child conf_xml "aircraft" ~select:(fun x -> ExtXml.attrib x "ac_id" = ac_id) in
     let ac_name = ExtXml.attrib conf "name" in
     let protocol =
