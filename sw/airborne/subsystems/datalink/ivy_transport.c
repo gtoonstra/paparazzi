@@ -33,7 +33,7 @@
 #include "subsystems/datalink/transport.h"
 
 #include <stdio.h>
-#include <Ivy/ivy.h>
+#include <Pprzbus/pprzbus.h>
 
 struct ivy_transport ivy_tp;
 

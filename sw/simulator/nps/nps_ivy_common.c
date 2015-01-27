@@ -2,8 +2,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <Ivy/ivy.h>
-#include <Ivy/ivyglibloop.h>
+#include <Pprzbus/pprzbus.h>
+#include <Pprzbus/pprzbusglibloop.h>
 
 #include "generated/airframe.h"
 #include "math/pprz_algebra_double.h"

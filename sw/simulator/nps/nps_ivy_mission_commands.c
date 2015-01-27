@@ -3,7 +3,7 @@
 #include "nps_ivy.h"
 
 #include <stdlib.h>
-#include <Ivy/ivy.h>
+#include <Pprzbus/pprzbus.h>
 
 #include "generated/airframe.h"
 

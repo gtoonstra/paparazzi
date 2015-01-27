@@ -39,7 +39,7 @@ CFLAGS += $(USER_CFLAGS)
 CFLAGS += -O$(OPT)
 CFLAGS += -g
 CFLAGS += -std=gnu99
-CFLAGS += $(shell pkg-config --cflags-only-I ivy-glib)
+CFLAGS += $(shell pkg-config --cflags-only-I pprzbus-glib)
 
 CXXFLAGS  = -W -Wall
 CXXFLAGS += $(INCLUDES)
@@ -47,9 +47,10 @@ CXXFLAGS += $($(TARGET).CFLAGS)
 CXXFLAGS += $(USER_CFLAGS)
 CXXFLAGS += -O$(OPT)
 CXXFLAGS += -g
-CXXFLAGS += $(shell pkg-config --cflags-only-I ivy-glib)
+CXXFLAGS += $(shell pkg-config --cflags-only-I pprzbus-glib)
 
 LDFLAGS	+= $($(TARGET).LDFLAGS)
+LDFLAGS	+= $(shell pkg-config --libs hiredis)
 
 #
 # General rules

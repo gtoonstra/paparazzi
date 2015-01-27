@@ -56,7 +56,7 @@ CFLAGS += -fPIC
 CFLAGS += -O$(OPT)
 CFLAGS += -g
 CFLAGS += -std=gnu99
-CFLAGS += $(shell pkg-config --cflags-only-I ivy-glib)
+CFLAGS += $(shell pkg-config --cflags-only-I pprzbus-glib)
 
 LDFLAGS		=	-lm
 
