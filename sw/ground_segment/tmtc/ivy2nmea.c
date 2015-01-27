@@ -722,7 +722,7 @@ int main ( int argc, char** argv)
   // Start IVY
   IvyInit ("IVY2NMEA", "IVY2NMEA READY", NULL, NULL, NULL, NULL);
   //IvyBindMsg(on_Gps, NULL, "^%s GPS (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",ac_id);
-  IvyBindMsg(on_Gps, NULL, "^ground FLIGHT_PARAM %s (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)", ac_id);
+  IvyBindMsg(NULL, on_Gps, NULL, "^ground FLIGHT_PARAM %s (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)", ac_id);
   //IvyBindMsg(on_Gps, NULL, "(.*)");
   IvyStart(ivy_bus);
 

@@ -73,17 +73,17 @@ static void on_DL_END_MISSION(IvyClientPtr app __attribute__ ((unused)),
 
 void nps_ivy_mission_commands_init(void) {
 
-  IvyBindMsg(on_DL_MISSION_GOTO_WP, NULL, "^(\\S*) MISSION_GOTO_WP (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_GOTO_WP_LLA, NULL, "^(\\S*) MISSION_GOTO_WP_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_CIRCLE, NULL, "^(\\S*) MISSION_CIRCLE (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_CIRCLE_LLA, NULL, "^(\\S*) MISSION_CIRCLE_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_SEGMENT, NULL, "^(\\S*) MISSION_SEGMENT (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_SEGMENT_LLA, NULL, "^(\\S*) MISSION_SEGMENT_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_PATH, NULL, "^(\\S*) MISSION_PATH (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_MISSION_PATH_LLA, NULL, "^(\\S*) MISSION_PATH_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_GOTO_MISSION, NULL, "^(\\S*) GOTO_MISSION (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_NEXT_MISSION, NULL, "^(\\S*) NEXT_MISSION (\\S*)");
-  IvyBindMsg(on_DL_END_MISSION, NULL, "^(\\S*) END_MISSION (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_GOTO_WP, NULL, "^(\\S*) MISSION_GOTO_WP (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_GOTO_WP_LLA, NULL, "^(\\S*) MISSION_GOTO_WP_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_CIRCLE, NULL, "^(\\S*) MISSION_CIRCLE (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_CIRCLE_LLA, NULL, "^(\\S*) MISSION_CIRCLE_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_SEGMENT, NULL, "^(\\S*) MISSION_SEGMENT (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_SEGMENT_LLA, NULL, "^(\\S*) MISSION_SEGMENT_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_PATH, NULL, "^(\\S*) MISSION_PATH (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MISSION_PATH_LLA, NULL, "^(\\S*) MISSION_PATH_LLA (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_GOTO_MISSION, NULL, "^(\\S*) GOTO_MISSION (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_NEXT_MISSION, NULL, "^(\\S*) NEXT_MISSION (\\S*)");
+  IvyBindMsg(NULL, on_DL_END_MISSION, NULL, "^(\\S*) END_MISSION (\\S*)");
 
 }
 

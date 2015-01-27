@@ -107,9 +107,9 @@ int main( int argc, char* argv[] )
   ml =  g_main_loop_new(NULL, FALSE);
 
   IvyInit ("IvyPlotProfile", "IvyPlotProfile READY", NULL, NULL, NULL, NULL);
-  IvyBindMsg(on_GPS, NULL, "^(\\S*) GPS (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_TMP_STATUS, NULL, "^(\\S*) TMP_STATUS (\\S*) (\\S*)");
-  IvyBindMsg(on_SHT_STATUS, NULL, "^(\\S*) SHT_STATUS (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_GPS, NULL, "^(\\S*) GPS (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_TMP_STATUS, NULL, "^(\\S*) TMP_STATUS (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_SHT_STATUS, NULL, "^(\\S*) SHT_STATUS (\\S*) (\\S*) (\\S*) (\\S*)");
 //  IvyBindMsg(on_SHT_STATUS, NULL, "^(\\S*) DPICCO_STATUS (\\S*) (\\S*) (\\S*) (\\S*)");
   IvyStart("127.255.255.255");
 

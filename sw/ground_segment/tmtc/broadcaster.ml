@@ -46,7 +46,7 @@ let () =
     let get_ivy = fun _ args ->
       try fprintf o "%s%!" (Base64.decode_string args.(0)) with
           exc -> prerr_endline (Printexc.to_string exc) in
-    ignore (Pprzbus.bind get_ivy (sprintf "^%s (.*)" !ivy_from));
+    ignore (Pprzbus.bind "" get_ivy (sprintf "^%s (.*)" !ivy_from));
 
     (* Main Loop *)
     GMain.main ()

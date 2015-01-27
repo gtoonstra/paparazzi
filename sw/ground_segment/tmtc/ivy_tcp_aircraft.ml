@@ -36,7 +36,7 @@ let () =
       let buf = Pprz.Transport.packet payload in
       fprintf o "%s%!" buf
     with _ -> () in
-  let _b = Pprzbus.bind get_ivy_message (sprintf "^%s (.*)" !id) in
+  let _b = Pprzbus.bind "" get_ivy_message (sprintf "^%s (.*)" !id) in
 
   (* Forward a datalink command on the bus *)
   let buffer_size = 256 in

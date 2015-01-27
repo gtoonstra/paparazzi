@@ -52,14 +52,14 @@ void nps_ivy_common_init(char* ivy_bus) {
   const char* agent_name = AIRFRAME_NAME"_NPS";
   const char* ready_msg = AIRFRAME_NAME"_NPS Ready";
   IvyInit(agent_name, ready_msg, NULL, NULL, NULL, NULL);
-  IvyBindMsg(on_DL_PING, NULL, "^(\\S*) DL_PING");
-  IvyBindMsg(on_DL_SETTING, NULL, "^(\\S*) DL_SETTING (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_GET_SETTING, NULL, "^(\\S*) GET_DL_SETTING (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_BLOCK, NULL,   "^(\\S*) BLOCK (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_PING, NULL, "^(\\S*) DL_PING");
+  IvyBindMsg(NULL, on_DL_SETTING, NULL, "^(\\S*) DL_SETTING (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_GET_SETTING, NULL, "^(\\S*) GET_DL_SETTING (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_BLOCK, NULL,   "^(\\S*) BLOCK (\\S*) (\\S*)");
 
 #ifdef RADIO_CONTROL_TYPE_DATALINK
-  IvyBindMsg(on_DL_RC_3CH, NULL, "^(\\S*) RC_3CH (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_DL_RC_4CH, NULL, "^(\\S*) RC_4CH (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_RC_3CH, NULL, "^(\\S*) RC_3CH (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_RC_4CH, NULL, "^(\\S*) RC_4CH (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
 #endif
 
 #ifdef __APPLE__

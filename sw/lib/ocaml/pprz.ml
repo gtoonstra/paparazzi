@@ -767,13 +767,13 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
   let message_bind = fun ?sender msg_name cb ->
     match sender with
         None ->
-          Pprzbus.bind
+          Pprzbus.bind ""
             (fun _ args ->
               let values = try snd (values_of_string args.(2)) with exc -> prerr_endline (Printexc.to_string exc); [] in
               cb args.(1) values)
             (sprintf "^([0-9]+\\.[0-9]+ )?([^ ]*) +(%s( .*|$))" msg_name)
       | Some s ->
-        Pprzbus.bind
+        Pprzbus.bind s 
           (fun _ args ->
             let values = try snd (values_of_string args.(1)) with  exc -> prerr_endline (Printexc.to_string exc); [] in
             cb s values)
@@ -790,7 +790,7 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
       with
           exc -> fprintf stderr "Pprz.answerer %s:%s: %s\n%!" sender msg_name (Printexc.to_string exc)
     in
-    Pprzbus.bind ivy_cb (sprintf "^([^ ]*) +([^ ]*) +(REQ_%s.*)" msg_name)
+    Pprzbus.bind "" ivy_cb (sprintf "^([^ ]*) +([^ ]*) +(REQ_%s.*)" msg_name)
 
   let gen_id = let r = ref 0 in fun () -> incr r; !r
   let message_req = fun sender msg_name values (f:string -> (string * value) list -> unit) ->
@@ -800,7 +800,7 @@ module MessagesOfXml(Class:CLASS_Xml) = struct
       f args.(0) (snd (values_of_string args.(1))) in
     let id = sprintf "%d_%d" (Unix.getpid ()) (gen_id ()) in
     let r = sprintf "^%s ([^ ]*) +(%s.*)" id msg_name in
-    b := Pprzbus.bind cb r;
+    b := Pprzbus.bind "" cb r;
     let msg_name_req = "REQ_" ^ msg_name in
     let m = sprintf "%s %s %s" sender id (string_of_message (snd (message_of_name msg_name_req)) values) in
     Pprzbus.send m

@@ -896,10 +896,10 @@ int main(int argc, char **argv) {
   //Here comes the ivy bindings
   IvyInit ("PPRZ_App_Server", "Papparazzi App Server Ready!", NULL, NULL, NULL, NULL);
 
-  IvyBindMsg(Ivy_All_Msgs, NULL, "(^ground (\\S*) (\\S*) .*)");
-  IvyBindMsg(on_app_server_NEW_AC, NULL, "ground NEW_AIRCRAFT (\\S*)");
-  IvyBindMsg(on_app_server_GET_CONFIG, NULL, "(\\S*) ground CONFIG (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
-  IvyBindMsg(on_app_server_AIRCRAFTS, NULL, "(\\S*) ground AIRCRAFTS (\\S*)");
+  IvyBindMsg(NULL, Ivy_All_Msgs, NULL, "(^ground (\\S*) (\\S*) .*)");
+  IvyBindMsg(NULL, on_app_server_NEW_AC, NULL, "ground NEW_AIRCRAFT (\\S*)");
+  IvyBindMsg(NULL, on_app_server_GET_CONFIG, NULL, "(\\S*) ground CONFIG (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_app_server_AIRCRAFTS, NULL, "(\\S*) ground AIRCRAFTS (\\S*)");
   IvyStart(IvyBus);
 
   GMainLoop *loop = g_main_loop_new(NULL, FALSE);

@@ -790,11 +790,11 @@ int main ( int argc, char** argv)
 
   // Start IVY
   IvyInit ("IVY <-> Serial", "IVY <-> Serial READY", NULL, NULL, NULL, NULL);
-  IvyBindMsg(on_Desired, NULL, "^%d DESIRED (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",local_uav.ac_id);
-  IvyBindMsg(on_Estimator, NULL, "^%d ESTIMATOR (\\S*) (\\S*)",local_uav.ac_id);
-  IvyBindMsg(on_Navigation, NULL, "^%d NAVIGATION (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",local_uav.ac_id);
-  IvyBindMsg(on_Attitude, NULL, "^%d ATTITUDE (\\S*) (\\S*) (\\S*)", local_uav.ac_id);
-  IvyBindMsg(on_Gps, NULL, "^%d GPS (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",local_uav.ac_id);
+  IvyBindMsg(NULL, on_Desired, NULL, "^%d DESIRED (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",local_uav.ac_id);
+  IvyBindMsg(NULL, on_Estimator, NULL, "^%d ESTIMATOR (\\S*) (\\S*)",local_uav.ac_id);
+  IvyBindMsg(NULL, on_Navigation, NULL, "^%d NAVIGATION (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",local_uav.ac_id);
+  IvyBindMsg(NULL, on_Attitude, NULL, "^%d ATTITUDE (\\S*) (\\S*) (\\S*)", local_uav.ac_id);
+  IvyBindMsg(NULL, on_Gps, NULL, "^%d GPS (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)",local_uav.ac_id);
   IvyStart("127.255.255.255");
 
   // Add Timer

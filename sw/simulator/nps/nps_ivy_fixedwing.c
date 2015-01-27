@@ -18,7 +18,7 @@ void nps_ivy_init(char* ivy_bus) {
   /* init ivy and bind some messages common to fw and rotorcraft */
   nps_ivy_common_init(ivy_bus);
 
-  IvyBindMsg(on_DL_MOVE_WP, NULL, "^(\\S*) MOVE_WP (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_DL_MOVE_WP, NULL, "^(\\S*) MOVE_WP (\\S*) (\\S*) (\\S*) (\\S*) (\\S*)");
 }
 
 //TODO use datalink parsing from fixedwing instead of doing it here explicitly

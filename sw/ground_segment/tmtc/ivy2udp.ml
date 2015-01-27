@@ -66,7 +66,7 @@ let () =
       assert (n = n')
     with _ -> () in
 
-  let _b = Pprzbus.bind get_ivy_message (sprintf "^%s (.*)" !id) in
+  let _b = Pprzbus.bind "" get_ivy_message (sprintf "^%s (.*)" !id) in
 
   (* Receiving a datalink message over UDP, on the same port *)
   let sockaddr = Unix.ADDR_INET (Unix.inet_addr_any, !datalink_port)

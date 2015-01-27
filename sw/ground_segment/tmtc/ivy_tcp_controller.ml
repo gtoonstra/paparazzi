@@ -61,7 +61,7 @@ let () =
       let buf = Pprz.Transport.packet payload in
       fprintf o "%s%!" buf
     with exc -> prerr_endline (Printexc.to_string exc) in
-  let _b = Pprzbus.bind get_ivy_message "^ground_dl (.*)" in
+  let _b = Pprzbus.bind "" get_ivy_message "^ground_dl (.*)" in
 
   let hangup = fun _ -> prerr_endline "hangup"; exit 1 in
   ignore (Glib.Io.add_watch [`HUP] hangup ginput);

@@ -292,9 +292,9 @@ int main(int argc, char** argv) {
   g_timeout_add(1000 , __timeout_func , ml);
 
   IvyInit("Video Synchronizer", "Video Synchronizer READY", NULL, NULL, NULL, NULL);
-  IvyBindMsg(on_Message, NULL, "^time(\\S*) (\\S*)");
-  IvyBindMsg(on_Message_Video, NULL, "^(\\S*) VIDEO_SYNC(\\S*) (\\S*)");
-  IvyBindMsg(on_Airframe_ID, NULL, "^replay(\\S*) PONG(\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_Message, NULL, "^time(\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_Message_Video, NULL, "^(\\S*) VIDEO_SYNC(\\S*) (\\S*)");
+  IvyBindMsg(NULL, on_Airframe_ID, NULL, "^replay(\\S*) PONG(\\S*) (\\S*)");
 
 #ifdef __APPLE__
   IvyStart("224.255.255.255");
