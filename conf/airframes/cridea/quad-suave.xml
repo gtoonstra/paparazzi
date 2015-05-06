@@ -12,6 +12,8 @@
 
   <firmware name="rotorcraft">
     <target name="ap" board="lisa_m_2.0">
+      <define name="RADIO_KILL_SWITCH" value="RADIO_CALIB"/>
+      <define name="USE_KILL_SWITCH_FOR_MOTOR_ARMING" value="1"/>
 
       <!-- MPU6000 is configured to output data at 2kHz, but polled at 512Hz PERIODIC_FREQUENCY -->
     </target>
@@ -19,7 +21,8 @@
     <define name="USE_PERSISTENT_SETTINGS" value="TRUE"/>
 
     <subsystem name="radio_control" type="ppm">
-        <configure name="RADIO_CONTROL_PPM_PIN" value="UART1_RX"/>
+        <!-- <configure name="RADIO_CONTROL_PPM_PIN" value="UART1_RX"/> -->
+        <configure name="RADIO_CONTROL_PPM_PIN" value="SERVO6"/>
     </subsystem>
 
     <target name="nps" board="pc">
@@ -218,6 +221,7 @@
     <define name="MODE_AUTO2"  value="AP_MODE_NAV"/>
   </section>
 
+<!--
   <section name="BAT">
     <define name="CATASTROPHIC_BAT_LEVEL" value="9.3" unit="V"/>
     <define name="CRITIC_BAT_LEVEL" value="9.6" unit="V"/>
@@ -225,5 +229,6 @@
     <define name="MAX_BAT_LEVEL" value="12.4" unit="V"/>
     <define name="MILLIAMP_AT_FULL_THROTTLE" value="30000"/>
   </section>
+-->
 
 </airframe>
